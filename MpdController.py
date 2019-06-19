@@ -35,8 +35,6 @@ class MpdController:
     def set_mpd_port(self, port):
         self.__port = int(port)
 
-
-
     def set_music_dir(self, music_dir):
         print "music dir: " + music_dir
         self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)

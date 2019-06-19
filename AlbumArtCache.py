@@ -126,6 +126,9 @@ class AlbumArtCache:
 
 
 def init_default_cache(music_path):
+    if music_path is '$XDG_MUSIC_DIR':
+        music_path = os.environ['XDG_MUSIC_DIR']
+
     if 'XDG_CACHE_HOME' in os.environ:
         cache_path = os.environ['XDG_CACHE_HOME'] + "/mpd-album-art"
     else:
