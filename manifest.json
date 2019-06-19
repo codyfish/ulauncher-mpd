@@ -1,0 +1,20 @@
+{
+  "manifest_version": "2",
+  "api_version": "1",
+  "name": "Music Player Daemon extension",
+  "description": "Control mpd via ulauncher",
+  "developer_name": "Felix",
+  "icon": "images/icon.png",
+  "options": {
+    "query_debounce": 0.1
+  },
+  "preferences": [
+    {
+      "id": "mpd_uex_keyword",
+      "type": "keyword",
+      "name": "mpd",
+      "description": "Control mpd",
+      "default_value": "mpd"
+    }
+  ]
+}
