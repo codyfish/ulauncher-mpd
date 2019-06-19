@@ -1,6 +1,8 @@
 from mpd import MPDClient
 from mpd import MPDError
 
+import os
+
 import QueryParser
 from MpdData import Action
 from MpdData import CommandData
@@ -13,19 +15,38 @@ class MpdController:
 
     def __init__(self):
         self.__client = MPDClient()
-        self.__album_art_cache = AlbumArtCache.init_default_cache("/home/felix/data/music")
+
+        self.__hostname = "localhost"
+        self.__port = 6600
+
+        music_dir = os.environ['XDG_MUSIC_DIR']
+
+        print "initial music dir: " + music_dir
+        self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
         # connect later anyways
         # self.__client.connect("localhost", 6600)
 
     def get_mpd_version(self):
         return self.__client.mpd_version
 
+    def set_mpd_host(self, hostname):
+        self.__hostname = hostname
+
+    def set_mpd_port(self, port):
+        self.__port = int(port)
+
+
+
+    def set_music_dir(self, music_dir):
+        print "music dir: " + music_dir
+        self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
+
     def ensure_connection(self):
         # Alternative: Async thread pinging server
         try:
             self.__client.ping()
         except MPDError:
-            self.__client.connect("localhost", 6600)
+            self.__client.connect(self.__hostname, self.__port)
 
     def query(self, query):
 

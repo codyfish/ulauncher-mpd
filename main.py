@@ -4,8 +4,11 @@ from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent
 from ulauncher.api.shared.item.ExtensionResultItem import ExtensionResultItem
 from ulauncher.api.shared.action.RenderResultListAction import RenderResultListAction
 from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
+from ulauncher.api.shared.event import PreferencesUpdateEvent
+from ulauncher.api.shared.event import PreferencesEvent
 
 import MpdController
+import PreferencesHandler
 
 
 class MpdExtension(Extension):
@@ -17,6 +20,8 @@ class MpdExtension(Extension):
 
         self.subscribe(KeywordQueryEvent, MpdKeywordQueryListener(mpd_controller))
         self.subscribe(ItemEnterEvent, MpdItemEnterListener(mpd_controller))
+        self.subscribe(PreferencesEvent, PreferencesHandler.MpdPreferencesEvent(mpd_controller))
+        self.subscribe(PreferencesUpdateEvent, PreferencesHandler.MpdPreferencesUpdateEvent(mpd_controller))
 
 
 class MpdKeywordQueryListener(EventListener):

@@ -15,6 +15,27 @@
       "name": "mpd",
       "description": "Control mpd",
       "default_value": "mpd"
+    },
+    {
+      "id": "mpd_music_dir",
+      "type": "input",
+      "name": "music directory",
+      "default_value" : "$XDG_MUSIC_DIR",
+      "description": "location of your music library"
+    },
+    {
+      "id": "mpd_hostname",
+      "type": "input",
+      "name": "hostname",
+      "default_value" : "localhost",
+      "description": "hostname of your mpd server"
+    },
+    {
+      "id": "mpd_port",
+      "type": "input",
+      "name": "port",
+      "default_value" : "6600",
+      "description": "port of your mpd server"
     }
   ]
 }
