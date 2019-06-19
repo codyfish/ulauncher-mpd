@@ -61,5 +61,15 @@ Cached album arts have following filenames in ulauncher-mpds cache folder:
 * Folders: `<path>_<to>_<directory>`
 * Playlist: `_<playlist>`
 
+## Preferences
+
+In the extension menu of ulauncher u can adjust ulauncher-mpd's preferences:
+
+* hostname: The hostname your mpd server is running on (normally `localhost`)
+* port: The port your mpd server is running on (normally `6600`)
+* music directory: the directory your library is stored in (needed for album arts)
+
+
+
 
 
