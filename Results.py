@@ -197,7 +197,8 @@ def get_largest_path(path, args):
 
 def list_folders(client, album_art_cache, action, args):
     # prevent errors with ascii and unicode in later maps and filters
-    args = args.encode('UTF-8')
+    # do not encode in python 3
+    # args = args.encode('UTF-8')
     # also in the middle of the path
     folder_results = client.list('file', "(file =~ '.*(?i){}.*$')".format(args))
 
