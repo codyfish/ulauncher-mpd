@@ -40,4 +40,4 @@ COMMAND_NAMES = {
 
 
 def parse_command(command):
-    return [value for key, value in COMMAND_NAMES.iteritems() if key.startswith(command)]
+    return [value for key, value in COMMAND_NAMES.items() if key.startswith(command)]

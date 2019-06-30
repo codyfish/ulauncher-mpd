@@ -21,7 +21,7 @@ class MpdController:
 
         music_dir = os.environ['XDG_MUSIC_DIR']
 
-        print "initial music dir: " + music_dir
+        print ("initial music dir: " + music_dir)
         self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
         # connect later anyways
         # self.__client.connect("localhost", 6600)
@@ -36,7 +36,7 @@ class MpdController:
         self.__port = int(port)
 
     def set_music_dir(self, music_dir):
-        print "music dir: " + music_dir
+        print ("music dir: " + music_dir)
         self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
 
     def ensure_connection(self):
@@ -63,7 +63,7 @@ class MpdController:
 
         command_suggestions = QueryParser.parse_command(command)
 
-        print command_suggestions
+        print (command_suggestions)
 
         if args is not None and len(command_suggestions) == 1:
             self.ensure_connection()
@@ -78,7 +78,7 @@ class MpdController:
         args = item_data.data
 
         playlist_length = self.__client.status()['playlistlength']
-        print playlist_length
+        print (playlist_length)
 
         if action is Action.NONE:
             # Wait for user input

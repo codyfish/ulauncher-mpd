@@ -7,7 +7,7 @@ from mpd import MPDClient
 def read_album_art(music_file, out_file):
     mutagen_file = File(music_file)
 
-    keys = mutagen_file.tags.keys()
+    keys = list(mutagen_file.tags.keys())
     if 'APIC:' in keys:
         artwork = mutagen_file.tags['APIC:'].data
 
@@ -86,7 +86,7 @@ class AlbumArtCache:
             read_album_art(self.__music_path + '/' + song['file'], album_art_file)
 
         except KeyError:
-            print "no album art found for " + song['album']
+            print("no album art found for " + song['album'])
             album_art_file = self.__default_album_art
 
         self.__album_arts[album_art_name] = album_art_file
@@ -113,7 +113,7 @@ class AlbumArtCache:
         # no song matches only a directory -> search instead of find
         song_list = mpd_client.search('file', folder)
         # remove matches in the middle
-        song_list = list(filter(lambda path: path['file'].startswith(folder), song_list))
+        song_list = list([path for path in song_list if path['file'].startswith(folder)])
 
         return self.find_and_cache_album_art(song_list, cached_name)
 
@@ -134,7 +134,7 @@ def init_default_cache(music_path):
     else:
         print("setting cache dir to default location\n")
         cache_path = os.environ['HOME'] + "/.cache/mpd-album-art"
-    print("cache dir: " + cache_path)
+    print(("cache dir: " + cache_path))
 
     if not os.path.isdir(cache_path):
         os.makedirs(cache_path)
@@ -146,6 +146,6 @@ def test(song):
     cache = init_default_cache("/home/felix/data/music")
 
     start = time.time()
-    print (cache.get_album_art(song))
+    print((cache.get_album_art(song)))
     end = time.time()
-    print end - start
+    print(end - start)

@@ -104,7 +104,7 @@ def list_commands(command_suggestions=None):
     if command_suggestions is not None:
         items = [COMMANDS[action] for action in command_suggestions]
     else:
-        items = [value for (key, value) in COMMANDS.iteritems()]
+        items = [value for (key, value) in COMMANDS.items()]
     return RenderResultListAction(items)
 
 
