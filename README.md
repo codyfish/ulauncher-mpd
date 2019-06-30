@@ -7,16 +7,17 @@ It displays and caches album arts while selecting what to play.
 
 ## Installation
 
-Currently, there is only a version for python 2 (ulauncher extension API 1/ulauncher v4) available.
+There is a version for python2 (ulauncher 4 / API 1) and one for python3 (ulauncher 5 / API 2) available.
+The python 2 version is located in the python2 branch
 Install this extension using ulaunchers extension menu.
 
 ### Dependencies
 
-* python-mpd2
-* enum
+* python-mpd2 (also needed for python3, in this case install with `pip`, not `pip2`)
+* enum (not required for python 3)
 * mutagen
 
-Install these python packages using e.g. `pip2 install`
+Install these python packages using e.g. `pip install` or `pip2 install` for python 2, respectively
 
 ## Usage
 
