@@ -4,7 +4,7 @@
   "name": "Music Player Daemon extension",
   "description": "Control mpd via ulauncher",
   "developer_name": "Felix",
-  "icon": "images/icon.png",
+  "icon": "images/app.svg",
   "options": {
     "query_debounce": 0.1
   },
