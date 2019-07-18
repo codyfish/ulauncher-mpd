@@ -92,12 +92,21 @@ class AlbumArtCache:
         self.__album_arts[album_art_name] = album_art_file
         return album_art_file
 
+    def copy_cached_album_art(self, src_file, out_name):
+        if out_name is "" or out_name is " ":
+            print "caching: destination name is empty, skipping to copy file"
+            self.__album_arts[out_name] = src_file
+            return
+        cached_path = self.__cache_path + '/' + out_name
+        shutil.copyfile(src_file, cached_path)
+        self.__album_arts[out_name] = cached_path
+
     def find_and_cache_album_art(self, song_list, cached_name):
         if song_list:
             for song in song_list:
                 album_art = self.get_album_art(song)
                 if album_art is not self.__default_album_art:
-                    self.__album_arts[cached_name] = album_art
+                    self.copy_cached_album_art(album_art, cached_name)
                     return album_art
         self.__album_arts[cached_name] = self.__default_album_art
         return self.__default_album_art
