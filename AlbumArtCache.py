@@ -1,12 +1,15 @@
 from mutagen import File
 import time
 import os
+import re
 from mpd import MPDClient
 import shutil
 
 
 def read_album_art(music_file, out_file):
     mutagen_file = File(music_file)
+
+    artwork = None
 
     keys = list(mutagen_file.tags.keys())
     if 'APIC:' in keys:
@@ -18,6 +21,14 @@ def read_album_art(music_file, out_file):
     elif 'APIC:"Album cover"' in keys:
         artwork = mutagen_file.tags['APIC:"Album cover"'].data
     else:
+        regex = re.compile("APIC:.*")
+
+        for tag in filter(regex.match, keys):
+            if mutagen_file.tags[tag].data:
+                artwork = mutagen_file.tags[tag].data
+                break
+
+    if artwork is None:
         raise KeyError("no album art found")
 
     with open(out_file, 'wb') as img:
