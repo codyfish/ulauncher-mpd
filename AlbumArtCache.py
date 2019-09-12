@@ -7,6 +7,8 @@ from mpd import MPDClient
 def read_album_art(music_file, out_file):
     mutagen_file = File(music_file)
 
+    artwork = None
+
     keys = mutagen_file.tags.keys()
     if 'APIC:' in keys:
         artwork = mutagen_file.tags['APIC:'].data
@@ -17,6 +19,14 @@ def read_album_art(music_file, out_file):
     elif 'APIC:"Album cover"' in keys:
         artwork = mutagen_file.tags['APIC:"Album cover"'].data
     else:
+        regex = re.compile("APIC:.*")
+
+        for tag in filter(regex.match, keys):
+            if mutagen_file.tags[tag].data:
+                artwork = mutagen_file.tags[tag].data
+                break
+
+    if artwork is None:
         raise KeyError("no album art found")
 
     with open(out_file, 'wb') as img:
@@ -86,7 +96,8 @@ class AlbumArtCache:
             read_album_art(self.__music_path + '/' + song['file'], album_art_file)
 
         except KeyError:
-            print "no album art found for " + song['album']
+            print
+            "no album art found for " + song['album']
             album_art_file = self.__default_album_art
 
         self.__album_arts[album_art_name] = album_art_file
@@ -94,7 +105,8 @@ class AlbumArtCache:
 
     def copy_cached_album_art(self, src_file, out_name):
         if out_name is "" or out_name is " ":
-            print "caching: destination name is empty, skipping to copy file"
+            print
+            "caching: destination name is empty, skipping to copy file"
             self.__album_arts[out_name] = src_file
             return
         cached_path = self.__cache_path + '/' + out_name
@@ -155,6 +167,7 @@ def test(song):
     cache = init_default_cache("/home/felix/data/music")
 
     start = time.time()
-    print (cache.get_album_art(song))
+    print(cache.get_album_art(song))
     end = time.time()
-    print end - start
+    print
+    end - start
