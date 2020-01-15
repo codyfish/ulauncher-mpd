@@ -43,8 +43,14 @@ class MpdController:
         # Alternative: Async thread pinging server
         try:
             self.__client.ping()
+            return True
         except MPDError:
-            self.__client.connect(self.__hostname, self.__port)
+            try:
+                self.__client.connect(self.__hostname, self.__port)
+                return True
+            except:
+                return False
+
 
     def query(self, query):
 
@@ -66,13 +72,15 @@ class MpdController:
         print(command_suggestions)
 
         if args is not None and len(command_suggestions) == 1:
-            self.ensure_connection()
+            if not self.ensure_connection():
+                return
             return Results.list_music(self.__client, self.__album_art_cache, command_suggestions[0], args)
         else:
             return Results.list_commands(command_suggestions)
 
     def execute(self, item_data):
-        self.ensure_connection()
+        if not self.ensure_connection():
+            return
 
         action = item_data.action
         args = item_data.data

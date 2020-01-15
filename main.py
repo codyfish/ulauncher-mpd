@@ -23,7 +23,6 @@ class MpdExtension(Extension):
         self.subscribe(PreferencesEvent, PreferencesHandler.MpdPreferencesEvent(mpd_controller))
         self.subscribe(PreferencesUpdateEvent, PreferencesHandler.MpdPreferencesUpdateEvent(mpd_controller))
 
-
 class MpdKeywordQueryListener(EventListener):
 
     def __init__(self, mpd_controller):
