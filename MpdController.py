@@ -19,10 +19,10 @@ class MpdController:
         self.__hostname = "localhost"
         self.__port = 6600
 
-        music_dir = os.environ['XDG_MUSIC_DIR']
+        #music_dir = os.environ['XDG_MUSIC_DIR']
 
-        print("initial music dir: " + music_dir)
-        self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
+        #print("initial music dir: " + music_dir)
+        #self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
         # connect later anyways
         # self.__client.connect("localhost", 6600)
 
