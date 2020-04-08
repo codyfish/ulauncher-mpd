@@ -45,8 +45,8 @@ Invoke the plugin by starting ulauncher and typing `mpd `.
 | `mpd playlist-add <playlist>` | `mpd la <playlist>` | Add playlist `<playlist>` at the end of the queue|
 | `mpd playlist-insert <playlist>` | `mpd pi <playlist>` | Insert playlist `<playlist>` after current song|
 | `mpd add-to-playlist <playlist>` | `mpd adt <playlist>` | Add current song at the end of  playlist `<playlist>` |
-| `mpd make-random` | `mpd mr` | Set random mode on |
-| `mpd unmake-random` | `mpd ur` | Set random mode off |
+| `mpd random-on` | `mpd rn` | Set random mode on |
+| `mpd random-off` | `mpd rf` | Set random mode off |
 | `mpd shuffle` | | Shuffle entire playlist once. Does not change random mode |
 | `mpd volume-up <int>` | `mpd vu <int>`| Increase volume by `<int>` or `volume step` when no value is given|
 | `mpd volume-down <int>` | `mpd vd <int>`| Decrease volume by `<int>` or `volume step` when no value is given|
