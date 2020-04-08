@@ -8,6 +8,7 @@ It displays and caches album arts while selecting what to play.
 ## Installation
 
 There is a version for python2 (ulauncher 4 / API 1) and one for python3 (ulauncher 5 / API 2) available.
+The python 2 version will not receive any future updates. 
 The python 2 version is located in the python2 branch
 Install this extension using ulaunchers extension menu.
 
@@ -44,6 +45,14 @@ Invoke the plugin by starting ulauncher and typing `mpd `.
 | `mpd playlist-add <playlist>` | `mpd la <playlist>` | Add playlist `<playlist>` at the end of the queue|
 | `mpd playlist-insert <playlist>` | `mpd pi <playlist>` | Insert playlist `<playlist>` after current song|
 | `mpd add-to-playlist <playlist>` | `mpd adt <playlist>` | Add current song at the end of  playlist `<playlist>` |
+| `mpd make-random` | `mpd mr` | Set random mode on |
+| `mpd unmake-random` | `mpd ur` | Set random mode off |
+| `mpd shuffle` | | Shuffle entire playlist once. Does not change random mode |
+| `mpd volume-up <int>` | `mpd vu <int>`| Increase volume by `<int>` or `volume step` when no value is given|
+| `mpd volume-down <int>` | `mpd vd <int>`| Decrease volume by `<int>` or `volume step` when no value is given|
+
+Insert actions turn random mode off
+ whereas add actions do not change the random mode.
 
 ### Cache
 
@@ -69,6 +78,7 @@ In the extension menu of ulauncher u can adjust ulauncher-mpd's preferences:
 * hostname: The hostname your mpd server is running on (normally `localhost`)
 * port: The port your mpd server is running on (normally `6600`)
 * music directory: the directory your library is stored in (needed for album arts)
+* volume step: The default volume step for increase and decrease in volume
 
 
 

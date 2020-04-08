@@ -35,6 +35,13 @@
       "name": "port",
       "default_value" : "6600",
       "description": "port of your mpd server"
+    },
+    {
+      "id" : "volume_default_dif",
+      "type": "input",
+      "name": "volume step",
+      "default_value": "10",
+      "description" : "default step when increasing/decreasing the volume"
     }
   ]
 }

@@ -96,6 +96,33 @@ COMMANDS = {
                                                 description="Adds current song to a playlist",
                                                 on_enter=ExtensionCustomAction(data=CommandData(Action.NONE),
                                                                                keep_app_open=True)),
+    Action.RANDOM_ON: ExtensionResultItem(icon='images/clear.svg',
+                                          name="random-on",
+                                          description="Random on",
+                                          on_enter=ExtensionCustomAction(data=CommandData(Action.RANDOM_ON),
+                                                                         keep_app_open=False)),
+    Action.RANDOM_OFF: ExtensionResultItem(icon='images/clear.svg',
+                                           name="random-off",
+                                           description="Random off",
+                                           on_enter=ExtensionCustomAction(data=CommandData(Action.RANDOM_OFF),
+                                                                          keep_app_open=False)),
+    Action.SHUFFLE: ExtensionResultItem(icon='images/clear.svg',
+                                        name="shuffle",
+                                        description="Shuffle playlist once",
+                                        on_enter=ExtensionCustomAction(data=CommandData(Action.SHUFFLE),
+                                                                       keep_app_open=False)),
+
+    Action.VOLUME_UP: ExtensionResultItem(icon='images/clear.svg',
+                                          name="volume-up",
+                                          description="Increase volume",
+                                          on_enter=ExtensionCustomAction(data=CommandData(Action.VOLUME_UP),
+                                                                         keep_app_open=False)),
+    Action.VOLUME_DOWN: ExtensionResultItem(icon='images/clear.svg',
+                                            name="volume-down",
+                                            description="Decrease volume",
+                                            on_enter=ExtensionCustomAction(
+                                                data=CommandData(Action.VOLUME_DOWN),
+                                                keep_app_open=False)),
 
 }
 
@@ -240,4 +267,22 @@ def list_playlists(client, album_art_cache, action, args):
                                  on_enter=ExtensionCustomAction(data=CommandData(action, data=playlist['playlist']),
                                                                 keep_app_open=False))
              for playlist in playlist_results]
+    return RenderResultListAction(items)
+
+
+def list_volume_up(args):
+    items = [ExtensionResultItem(icon='images/clear.svg',
+                                 name="volume-up",
+                                 description="Increase volume",
+                                 on_enter=ExtensionCustomAction(data=CommandData(Action.VOLUME_UP, data=args),
+                                                                keep_app_open=False))]
+    return RenderResultListAction(items)
+
+
+def list_volume_down(args):
+    items = [ExtensionResultItem(icon='images/clear.svg',
+                                 name="volume-down",
+                                 description="Decrease volume",
+                                 on_enter=ExtensionCustomAction(data=CommandData(Action.VOLUME_DOWN, data=args),
+                                                                keep_app_open=False))]
     return RenderResultListAction(items)

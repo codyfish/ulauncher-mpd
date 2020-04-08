@@ -27,6 +27,13 @@ class Action(Enum):
 
     ADD_TO_PLAYLIST = 41
 
+    RANDOM_ON = 51
+    RANDOM_OFF = 52
+    SHUFFLE = 54
+
+    VOLUME_UP = 61
+    VOLUME_DOWN = 62
+
 
 class CommandData:
     def __init__(self, action, data=None):

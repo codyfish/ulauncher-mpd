@@ -23,6 +23,8 @@ def insert_song_files(client, files):
     if pos is not get_playlist_length(client):
         pos = pos + 1
 
+    # Toggle off Random
+    client.random(0)
     insert_song_files_at(client, pos, files)
 
 
@@ -36,6 +38,8 @@ def insert_song(client, song_file):
     if pos is not get_playlist_length(client):
         pos = pos + 1
 
+    # Toggle off Random
+    client.random(0)
     client.addid(song_file, pos)
 
 
@@ -60,3 +64,27 @@ def insert_folder(client, folder):
 def insert_playlist(client, playlist):
     song_files = client.listplaylist(playlist)
     insert_song_files(client, song_files)
+
+
+def volume_up(client, args, default_volume_dif):
+    volume = int(client.status()['volume'])
+
+    try:
+        dif = int(args)
+    except (TypeError, ValueError):
+        dif = default_volume_dif
+
+    volume = min(max(volume + dif, 0), 100)
+    client.setvol(volume)
+
+
+def volume_down(client, args, default_volume_dif):
+    volume = int(client.status()['volume'])
+
+    try:
+        dif = int(args)
+    except (TypeError, ValueError):
+        dif = default_volume_dif
+
+    volume = min(max(volume - dif, 0), 100)
+    client.setvol(volume)

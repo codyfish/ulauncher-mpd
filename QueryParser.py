@@ -21,6 +21,12 @@ COMMAND_NAMES = {
 
     "add-to-playlist": Action.ADD_TO_PLAYLIST,
 
+    "random-on": Action.RANDOM_ON,
+    "random-off": Action.RANDOM_OFF,
+
+    "volume-up": Action.VOLUME_UP,
+    "volume-down": Action.VOLUME_DOWN,
+
     # Shortcuts
 
     "sa": Action.ADD_SONG,
@@ -36,6 +42,13 @@ COMMAND_NAMES = {
 
     "atp": Action.ADD_TO_PLAYLIST,
 
+    "rn": Action.RANDOM_ON,
+    "rf": Action.RANDOM_OFF,
+
+    "vu": Action.VOLUME_UP,
+    "vd": Action.VOLUME_DOWN,
+
+    "sh": Action.SHUFFLE,
 }
 
 

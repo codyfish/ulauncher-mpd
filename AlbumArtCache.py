@@ -105,7 +105,7 @@ class AlbumArtCache:
         return album_art_file
 
     def copy_cached_album_art(self, src_file, out_name):
-        if out_name is "" or out_name is " ":
+        if out_name == "" or out_name == " ":
             print("caching: destination name is empty, skipping to copy file")
             self.__album_arts[out_name] = src_file
             return
@@ -147,8 +147,12 @@ class AlbumArtCache:
 
 
 def init_default_cache(music_path):
-    if music_path == '$XDG_MUSIC_DIR' or music_path.strip()=="":
-        music_path = os.environ['XDG_MUSIC_DIR']
+    if music_path == '$XDG_MUSIC_DIR' or music_path.strip() == "":
+        if 'XDG_MUSIC_DIR' in os.environ:
+            music_path = os.environ['XDG_MUSIC_DIR']
+        else:
+            print("assuming music dir is ~/music. To change this, set music_path in the configuration section")
+            music_path = os.environ['HOME'] + "/music"
 
     if 'XDG_CACHE_HOME' in os.environ:
         cache_path = os.environ['XDG_CACHE_HOME'] + "/mpd-album-art"
@@ -162,11 +166,3 @@ def init_default_cache(music_path):
 
     return AlbumArtCache(cache_path, music_path, "images/icon.png")
 
-
-def test(song):
-    cache = init_default_cache("/home/felix/data/music")
-
-    start = time.time()
-    print((cache.get_album_art(song)))
-    end = time.time()
-    print(end - start)

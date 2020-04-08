@@ -18,11 +18,12 @@ class MpdController:
 
         self.__hostname = "localhost"
         self.__port = 6600
+        self.__default_volume_dif = 10
 
-        #music_dir = os.environ['XDG_MUSIC_DIR']
+        # c music_dir = os.environ['XDG_MUSIC_DIR']
 
-        #print("initial music dir: " + music_dir)
-        #self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
+        # print("initial music dir: " + music_dir)
+        # self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
         # connect later anyways
         # self.__client.connect("localhost", 6600)
 
@@ -39,6 +40,14 @@ class MpdController:
         print("music dir: " + music_dir)
         self.__album_art_cache = AlbumArtCache.init_default_cache(music_dir)
 
+    def set_default_volume_dif(self, dif):
+        try:
+            self.__default_volume_dif = int(dif)
+        except (TypeError, ValueError):
+            print("Default volume difference must be an integer")
+
+
+
     def ensure_connection(self):
         # Alternative: Async thread pinging server
         try:
@@ -50,7 +59,6 @@ class MpdController:
                 return True
             except:
                 return False
-
 
     def query(self, query):
 
@@ -71,7 +79,11 @@ class MpdController:
 
         print(command_suggestions)
 
-        if args is not None and len(command_suggestions) == 1:
+        if len(command_suggestions) == 1 and command_suggestions[0] is Action.VOLUME_UP:
+            return Results.list_volume_up(args)
+        elif len(command_suggestions) == 1 and command_suggestions[0] is Action.VOLUME_DOWN:
+            return Results.list_volume_down(args)
+        elif args is not None and len(command_suggestions) == 1:
             if not self.ensure_connection():
                 return
             return Results.list_music(self.__client, self.__album_art_cache, command_suggestions[0], args)
@@ -131,6 +143,17 @@ class MpdController:
                 self.__client.playlistadd(args, song['file'])
             # Avoid playing
             return
+        elif action is Action.RANDOM_ON:
+            self.__client.random(1)
+        elif action is Action.RANDOM_OFF:
+            self.__client.random(0)
+        elif action is Action.SHUFFLE:
+            self.__client.shuffle()
+
+        elif action is Action.VOLUME_UP:
+            MpdHelper.volume_up(self.__client, args, self.__default_volume_dif)
+        elif action is Action.VOLUME_DOWN:
+            MpdHelper.volume_down(self.__client, args, self.__default_volume_dif)
 
         # start playing if not playing
         if self.__client.status()['state'] == "stop":
