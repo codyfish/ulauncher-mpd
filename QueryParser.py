@@ -27,6 +27,8 @@ COMMAND_NAMES = {
     "volume-up": Action.VOLUME_UP,
     "volume-down": Action.VOLUME_DOWN,
 
+    "shuffle": Action.SHUFFLE,
+
     # Shortcuts
 
     "sa": Action.ADD_SONG,
