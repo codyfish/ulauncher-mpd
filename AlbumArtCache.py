@@ -1,4 +1,5 @@
 from mutagen import File
+from mutagen import MutagenError
 import time
 import os
 import re
@@ -97,7 +98,7 @@ class AlbumArtCache:
         try:
             read_album_art(self.__music_path + '/' + song['file'], album_art_file)
 
-        except KeyError:
+        except (KeyError, MutagenError):
             print("no album art found for " + song['album'])
             album_art_file = self.__default_album_art
 
@@ -165,4 +166,3 @@ def init_default_cache(music_path):
         os.makedirs(cache_path)
 
     return AlbumArtCache(cache_path, music_path, "images/icon.png")
-
