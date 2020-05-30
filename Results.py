@@ -126,6 +126,9 @@ COMMANDS = {
 
 }
 
+def gtk_string(string):
+    return string.replace("&","&amp;")
+
 
 def list_commands(command_suggestions=None):
     if command_suggestions is not None:
@@ -171,8 +174,8 @@ def list_songs(client, album_art_cache, action, args):
     query_results = query_results[:9]
 
     items = [ExtensionResultItem(icon=album_art_cache.get_album_art(song),
-                                 name="{} - {}".format(song['artist'], song['title']) if 'artist' in song.keys()
-                                 else song['title'],
+                                 name=gtk_string("{} - {}".format(song['artist'], song['title'])) if 'artist' in song.keys()
+                                 else gtk_string(song['title']),
                                  description="Add Song",
                                  on_enter=ExtensionCustomAction(data=CommandData(action, data=song['file']),
                                                                 keep_app_open=False))
@@ -182,12 +185,13 @@ def list_songs(client, album_art_cache, action, args):
 
 def list_albums(client, album_art_cache, action, args):
     albums_results = client.list('album', "(album =~ '(?i){}.*$')".format(args))
-    albums_results += [album for album in client.list('album', "(Any =~ '(?i){}.*$')".format(args)) if
-                       album not in albums_results]
+    albums_results = [item['album'] for item in albums_results]
+    albums_results += [album['album'] for album in client.list('album', "(Any =~ '(?i){}.*$')".format(args)) if
+                       album['album'] not in albums_results]
     albums_results = albums_results[:9]
 
     items = [ExtensionResultItem(icon=album_art_cache.get_album_art_album(client, album),
-                                 name=album,
+                                 name=gtk_string(album),
                                  description="Add Album",
                                  on_enter=ExtensionCustomAction(data=CommandData(action, data=album),
                                                                 keep_app_open=False))
@@ -197,12 +201,13 @@ def list_albums(client, album_art_cache, action, args):
 
 def list_artists(client, album_art_cache, action, args):
     artist_results = client.list('artist', "(artist =~ '(?i){}.*$')".format(args))
-    artist_results += [artist for artist in client.list('artist', "(Any =~ '(?i){}.*$')".format(args)) if
-                       artist not in artist_results]
+    artist_results = [item['artist'] for item in artist_results]
+    artist_results += [artist['artist'] for artist in client.list('artist', "(Any =~ '(?i){}.*$')".format(args)) if
+                       artist['artist'] not in artist_results]
     artist_results = artist_results[:9]
 
     items = [ExtensionResultItem(icon=album_art_cache.get_album_art_artist(client, artist),
-                                 name=artist,
+                                 name=gtk_string(artist),
                                  description="Add Artist",
                                  on_enter=ExtensionCustomAction(data=CommandData(action, data=artist),
                                                                 keep_app_open=False))
@@ -228,7 +233,7 @@ def list_folders(client, album_art_cache, action, args):
     # args = args.encode('UTF-8')
     # also in the middle of the path
     folder_results = client.list('file', "(file =~ '.*(?i){}.*$')".format(args))
-
+    folder_results = [item['file'] for item in folder_results]
     # print type(folder_results[0])
     # print type(args)
 
@@ -246,7 +251,7 @@ def list_folders(client, album_art_cache, action, args):
     folder_results = folder_results[:9]
 
     items = [ExtensionResultItem(icon=album_art_cache.get_album_art_folder(client, folder),
-                                 name=folder,
+                                 name=gtk_string(folder),
                                  description="Add Folder",
                                  on_enter=ExtensionCustomAction(data=CommandData(action, data=folder),
                                                                 keep_app_open=False))
